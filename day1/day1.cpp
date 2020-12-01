@@ -40,7 +40,7 @@ void part2(std::vector<int>& nums) {
 
 std::vector<int> loadInput() {
     std::vector<int> nums;
-    std::ifstream f{ "inputs\\day1.txt" };
+    std::ifstream f{ "input.txt" };
     int num;
     while (f >> num) {
         nums.push_back(num);
