@@ -22,11 +22,11 @@ struct Password {
         return pos1 != pos2;
     }
 
-    friend std::istream& operator>>(std::istream& is, Password& policy) {
+    friend std::istream& operator>>(std::istream& is, Password& password) {
         // line format:
-        // <min>-<max> <ch>: <password>
+        // <num1>-<num2> <ch>: <password>
         char discard;
-        return is >> policy.num1 >> discard >> policy.num2 >> policy.ch >> discard >> policy.password;
+        return is >> password.num1 >> discard >> password.num2 >> password.ch >> discard >> password.password;
     }
 };
 
