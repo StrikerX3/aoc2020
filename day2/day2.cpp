@@ -30,7 +30,8 @@ struct Password {
     }
 };
 
-// Part 1 - Count valid passwords where num1 and num2 specify the number of times ch must appear in the password
+// Part 1 - Count valid passwords where num1 and num2 specify the minimum and maximum number of times (respectively)
+// ch must appear in the password
 void part1(const std::vector<Password>& passwords) {
     size_t validCount = 0;
     for (auto& password : passwords) {
