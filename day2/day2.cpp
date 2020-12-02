@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -9,10 +10,7 @@ struct Password {
     std::string password;
 
     bool valid1() const {
-        size_t count = 0;
-        for (char c : password) {
-            if (c == ch) count++;
-        }
+        size_t count = std::count(password.begin(), password.end(), ch);
         return (count >= num1) && (count <= num2);
     }
 
