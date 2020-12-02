@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <ranges>
 
 struct Password {
     size_t num1;
@@ -9,8 +10,9 @@ struct Password {
     char ch;
     std::string password;
 
+
     bool valid1() const {
-        size_t count = std::count(password.begin(), password.end(), ch);
+        size_t count = std::ranges::count(password, ch);
         return (count >= num1) && (count <= num2);
     }
 
