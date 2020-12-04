@@ -63,23 +63,23 @@ void part2(const std::vector<Passport>& passports) {
         };
     };
 
-    auto byrValidator = makeYearRangeValidator("byr", 1920, 2002);
-    auto iyrValidator = makeYearRangeValidator("iyr", 2010, 2020);
-    auto eyrValidator = makeYearRangeValidator("eyr", 2020, 2030);
-    auto hgtValidator = makeHeightValidator("hgt", 150, 193, 59, 76);
-    auto hclValidator = makeRegexValidator("hcl", "^#[0-9a-f]{6}$");
-    auto eclValidator = makeRegexValidator("ecl", "^amb|blu|brn|gry|grn|hzl|oth$");
-    auto pidValidator = makeRegexValidator("pid", "^\\d{9}$");
+    auto byrValid = makeYearRangeValidator("byr", 1920, 2002);
+    auto iyrValid = makeYearRangeValidator("iyr", 2010, 2020);
+    auto eyrValid = makeYearRangeValidator("eyr", 2020, 2030);
+    auto hgtValid = makeHeightValidator("hgt", 150, 193, 59, 76);
+    auto hclValid = makeRegexValidator("hcl", "^#[0-9a-f]{6}$");
+    auto eclValid = makeRegexValidator("ecl", "^amb|blu|brn|gry|grn|hzl|oth$");
+    auto pidValid = makeRegexValidator("pid", "^\\d{9}$");
 
     std::cout << "part 2: " << std::count_if(passports.begin(), passports.end(), [&](const Passport& passport) -> bool {
         return isValid(passport)
-            && byrValidator(passport)
-            && iyrValidator(passport)
-            && eyrValidator(passport)
-            && hgtValidator(passport)
-            && hclValidator(passport)
-            && eclValidator(passport)
-            && pidValidator(passport);
+            && byrValid(passport)
+            && iyrValid(passport)
+            && eyrValid(passport)
+            && hgtValid(passport)
+            && hclValid(passport)
+            && eclValid(passport)
+            && pidValid(passport);
     }) << "\n";
 }
 
