@@ -49,7 +49,7 @@ std::vector<int> loadInput() {
 }
 
 int main() {
-    std::vector<int> nums = loadInput();
+    auto nums = loadInput();
     part1(nums);
     part2(nums);
     return 0;

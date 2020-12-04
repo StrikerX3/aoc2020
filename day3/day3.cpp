@@ -51,7 +51,7 @@ auto loadInput() {
 }
 
 int main() {
-    std::vector<std::string> map = loadInput();
+    auto map = loadInput();
     part1(map);
     part2(map);
     return 0;

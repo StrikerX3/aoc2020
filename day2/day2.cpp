@@ -60,7 +60,7 @@ auto loadInput() {
 }
 
 int main() {
-    std::vector<Password> passwords = loadInput();
+    auto passwords = loadInput();
     part1(passwords);
     part2(passwords);
     return 0;
