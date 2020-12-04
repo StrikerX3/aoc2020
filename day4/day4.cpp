@@ -25,72 +25,61 @@ void part1(const std::vector<Passport>& passports) {
 }
 
 void part2(const std::vector<Passport>& passports) {
-    std::regex rgx_yr{ "^(\\d{4})$" };
-    std::regex rgx_hgt{ "^(\\d{3})cm|(\\d{2})in$" };
-    std::regex rgx_hcl{ "^#[0-9a-f]{6}$" };
-    std::regex rgx_ecl{ "^amb|blu|brn|gry|grn|hzl|oth$" };
-    std::regex rgx_pid{ "^\\d{9}$" };
+    auto makeYearRangeValidator = [](const std::string key, int min, int max) -> auto {
+        return [=](const Passport& passport) -> bool {
+            std::regex rgx{ "^(\\d{4})$" };
+            std::smatch match;
+            if (std::regex_match(passport.at(key), match, rgx)) {
+                auto yr = std::stoi(match.str());
+                return (yr >= min) && (yr <= max);
+            }
+            return false;
+        };
+    };
+    auto makeHeightValidator = [](const std::string key, int minCM, int maxCM, int minIN, int maxIN) -> auto {
+        return [=](const Passport& passport) -> bool {
+            std::regex rgx{ "^(\\d{3})cm|(\\d{2})in$" };
+            std::smatch match;
+            if (std::regex_match(passport.at(key), match, rgx)) {
+                auto hgtCMStr = match[1].str();
+                auto hgtINStr = match[2].str();
+                if (!hgtCMStr.empty()) {
+                    auto hgt = std::stoi(hgtCMStr);
+                    return (hgt >= minCM) && (hgt <= maxCM);
+                }
+                else if (!hgtINStr.empty()) {
+                    auto hgt = std::stoi(hgtINStr);
+                    return (hgt >= minIN) && (hgt <= maxIN);
+                }
+            }
+            return false;
+        };
+    };
+    auto makeRegexValidator = [](const std::string key, const std::string pattern) -> auto {
+        return [=](const Passport& passport) -> bool {
+            std::regex rgx{ pattern };
+            std::smatch match;
+            return std::regex_match(passport.at(key), match, rgx);
+        };
+    };
+
+    auto byrValidator = makeYearRangeValidator("byr", 1920, 2002);
+    auto iyrValidator = makeYearRangeValidator("iyr", 2010, 2020);
+    auto eyrValidator = makeYearRangeValidator("eyr", 2020, 2030);
+    auto hgtValidator = makeHeightValidator("hgt", 150, 193, 59, 76);
+    auto hclValidator = makeRegexValidator("hcl", "^#[0-9a-f]{6}$");
+    auto eclValidator = makeRegexValidator("ecl", "^amb|blu|brn|gry|grn|hzl|oth$");
+    auto pidValidator = makeRegexValidator("pid", "^\\d{9}$");
 
     std::cout << "part 2: " << std::count_if(passports.begin(), passports.end(), [&](const Passport& passport) -> bool {
-        if (!isValid(passport)) {
-            return false;
-        }
-
-        std::smatch match;
-
-        if (std::regex_match(passport.at("byr"), match, rgx_yr)) {
-            auto yr = std::stoi(match.str());
-            if (yr < 1920 || yr > 2002) return false;
-        }
-        else {
-            return false;
-        }
-
-        if (std::regex_match(passport.at("iyr"), match, rgx_yr)) {
-            auto yr = std::stoi(match.str());
-            if (yr < 2010 || yr > 2020) return false;
-        }
-        else {
-            return false;
-        }
-
-        if (std::regex_match(passport.at("eyr"), match, rgx_yr)) {
-            auto yr = std::stoi(match.str());
-            if (yr < 2020 || yr > 2030) return false;
-        }
-        else {
-            return false;
-        }
-
-        if (std::regex_match(passport.at("hgt"), match, rgx_hgt)) {
-            auto hgtCMStr = match[1].str();
-            auto hgtINStr = match[2].str();
-            if (!hgtCMStr.empty()) {
-                auto hgt = std::stoi(hgtCMStr);
-                if (hgt < 150 || hgt > 193) return false;
-            }
-            else if (!hgtINStr.empty()) {
-                auto hgt = std::stoi(hgtINStr);
-                if (hgt < 59 || hgt > 76) return false;
-            }
-        }
-        else {
-            return false;
-        }
-
-        if (!std::regex_match(passport.at("hcl"), match, rgx_hcl)) {
-            return false;
-        }
-
-        if (!std::regex_match(passport.at("ecl"), match, rgx_ecl)) {
-            return false;
-        }
-
-        if (!std::regex_match(passport.at("pid"), match, rgx_pid)) {
-            return false;
-        }
-
-        return true;
+        return isValid(passport)
+            && byrValidator(passport)
+            && iyrValidator(passport)
+            && eyrValidator(passport)
+            && hgtValidator(passport)
+            && hclValidator(passport)
+            && eclValidator(passport)
+            && pidValidator(passport);
     }) << "\n";
 }
 
