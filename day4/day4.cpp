@@ -92,16 +92,16 @@ auto loadInput() {
         if (strlen(line) == 0) {
             passports.push_back(map);
             map.clear();
+            continue;
         }
-        else {
-            std::istringstream iss{ line };
-            std::string entry;
-            while (iss >> entry) {
-                auto colonPos = entry.find(':');
-                auto key = entry.substr(0, colonPos);
-                auto value = entry.substr(colonPos + 1);
-                map[key] = value;
-            }
+
+        std::istringstream iss{ line };
+        std::string entry;
+        while (iss >> entry) {
+            auto colonPos = entry.find(':');
+            auto key = entry.substr(0, colonPos);
+            auto value = entry.substr(colonPos + 1);
+            map[key] = value;
         }
     }
     if (!map.empty()) {
