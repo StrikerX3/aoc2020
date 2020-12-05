@@ -10,10 +10,7 @@ using u32 = uint32_t;
 u32 toID(std::string seat) {
     u32 id = 0;
     for (auto ch : seat) {
-        id <<= 1;
-        if (ch == 'B' || ch == 'R') {
-            id |= 1;
-        }
+        id = (id << 1) | (ch == 'B' || ch == 'R');
     }
     return id;
 }
