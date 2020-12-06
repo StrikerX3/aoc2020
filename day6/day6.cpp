@@ -38,22 +38,22 @@ auto loadInput() {
     std::vector<Answers> answers;
     std::ifstream f{ "input.txt" };
     std::string line;
-    Answers entry;
+    Answers groupAnswers;
     while (std::getline(f, line)) {
         if (line.empty()) {
-            answers.push_back(entry);
-            entry.Reset();
+            answers.push_back(groupAnswers);
+            groupAnswers.Reset();
             continue;
         }
-        std::bitset<26> groupAnswers;
+        std::bitset<26> personAnswers;
         for (char c : line) {
-            groupAnswers.set(c - 'a');
+            personAnswers.set(c - 'a');
         }
-        entry.any |= groupAnswers;
-        entry.all &= groupAnswers;
+        groupAnswers.any |= personAnswers;
+        groupAnswers.all &= personAnswers;
     }
-    if (entry.any.any()) {
-        answers.push_back(entry);
+    if (groupAnswers.any.any()) {
+        answers.push_back(groupAnswers);
     }
     return answers;
 }
