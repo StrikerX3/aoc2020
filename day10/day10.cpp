@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <functional>
 #include <algorithm>
 #include <unordered_map>
 
@@ -19,26 +20,25 @@ void part1(const std::vector<u32>& adapters) {
     std::cout << "part 1: " << (diff1 * diff3) << " (" << diff1 << ", " << diff3 << ")\n";
 }
 
-u64 countCombinations(const std::vector<u32>& adapters, size_t index) {
-    static std::unordered_map<size_t, u64> memory;
-    if (memory.contains(index)) {
-        return memory.at(index);
-    }
-    u64 count = 0;
-    u32 currAdapter = adapters[index];
-    for (size_t i = index + 1; i < adapters.size(); i++) {
-        if (adapters[i] - currAdapter <= 3) {
-            count += countCombinations(adapters, i);
-            if (i == adapters.size() - 1) {
-                count++;
+void part2(const std::vector<u32>& adapters) {
+    std::function<u64(const std::vector<u32>&, size_t)> countCombinations =
+        [&, memory = std::unordered_map<size_t, u64>{}](const std::vector<u32>& adapters, size_t index) mutable->u64 {
+        if (memory.contains(index)) {
+            return memory.at(index);
+        }
+        u64 count = 0;
+        u32 currAdapter = adapters[index];
+        for (size_t i = index + 1; i < adapters.size(); i++) {
+            if (adapters[i] - currAdapter <= 3) {
+                count += countCombinations(adapters, i);
+                if (i == adapters.size() - 1) {
+                    count++;
+                }
             }
         }
-    }
-    memory[index] = count;
-    return count;
-}
-
-void part2(const std::vector<u32>& adapters) {
+        memory[index] = count;
+        return count;
+    };
     std::cout << "part 2: " << countCombinations(adapters, 0) << "\n";
 }
 
