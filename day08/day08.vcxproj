@@ -21,9 +21,10 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{50702d17-2c92-4ccd-b0e4-0d6c0dc13808}</ProjectGuid>
-    <RootNamespace>day1</RootNamespace>
+    <ProjectGuid>{b0207526-278f-4798-943a-216e3b8a98b5}</ProjectGuid>
+    <RootNamespace>day8</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>day08</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -147,7 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="day1.cpp" />
+    <ClCompile Include="day08.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="input.txt" />
