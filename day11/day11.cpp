@@ -60,13 +60,13 @@ void part2(const std::vector<std::string>& seats) {
     while (simulate(state, 5, [](auto& seats, size_t x, size_t y) -> size_t {
         size_t occupiedNeighbors = 0;
         constexpr std::pair<int, int> directions[] = {
-            {-1, -1}, {-1, 0}, {-1, +1},
-            {0, -1}, /*{0, 0},*/ {0, +1},
-            {+1, -1}, {+1, 0}, {+1, +1}
+            {-1, -1}, { 0, -1}, {+1, -1},
+            {-1,  0}, /*0,  0*/ {+1,  0},
+            {-1, +1}, { 0, +1}, {+1, +1}
         };
         size_t sy = seats.size();
         size_t sx = seats[0].size();
-        for (auto &dir : directions) {
+        for (auto& dir : directions) {
             size_t nx = x + dir.first;
             size_t ny = y + dir.second;
             while (nx < sx && ny < sy) {
