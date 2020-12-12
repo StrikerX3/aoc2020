@@ -144,7 +144,6 @@ std::vector<Action> loadInput() {
         actions.push_back(action);
     }
     return actions;
-
 }
 
 int main() {
