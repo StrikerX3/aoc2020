@@ -57,34 +57,12 @@ struct Coord {
     }
 
     void RotateCW(u32 degrees) {
-        constexpr s32 rotationMatrices[4][2][2] = {
-            // 0 degrees
-            {
-                { +1,  0 },
-                {  0, +1 },
-            },
-            // 90 degrees
-            {
-                {  0, +1 },
-                { -1,  0 },
-            },
-            // 180 degrees
-            {
-                { -1,  0 },
-                {  0, -1 },
-            },
-            // 270 degrees
-            {
-                {  0, -1 },
-                { +1,  0 },
-            },
-        };
-        auto index = degrees / 90;
-        auto& matrix = rotationMatrices[index];
-        *this = {
-            x * matrix[0][0] + y * matrix[0][1],
-            x * matrix[1][0] + y * matrix[1][1],
-        };
+        switch (degrees) {
+        case 0: break;
+        case 90: *this = { y, -x }; break;
+        case 180: *this = { -x, -y }; break;
+        case 270: *this = { -y, x }; break;
+        }
     }
 
     u32 ManhattanDistance() const {
