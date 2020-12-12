@@ -29,7 +29,7 @@ enum class Direction {
     North  // +Y
 };
 
-Direction RotateCW(const Direction direction, const s32 degrees) {
+Direction RotateCW(const Direction direction, const u32 degrees) {
     return static_cast<Direction>((static_cast<size_t>(direction) + degrees / 90) % 4);
 }
 
