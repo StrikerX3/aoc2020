@@ -56,27 +56,6 @@ struct Coord {
         }
     }
 
-    u32 ManhattanDistance() const {
-        return std::abs(x) + std::abs(y);
-    }
-};
-
-class Waypoint {
-public:
-    void Execute(const Action& action) {
-        switch (action.type) {
-        case 'E': coord.x += action.value; break;
-        case 'S': coord.y -= action.value; break;
-        case 'W': coord.x -= action.value; break;
-        case 'N': coord.y += action.value; break;
-        case 'R': RotateCW(action.value); break;
-        case 'L': RotateCW(360 - action.value); break;
-        }
-    }
-
-    const Coord& Coordinates() const { return coord; }
-
-private:
     void RotateCW(u32 degrees) {
         constexpr s32 rotationMatrices[4][2][2] = {
             // 0 degrees
@@ -102,12 +81,33 @@ private:
         };
         auto index = degrees / 90;
         auto& matrix = rotationMatrices[index];
-        coord = {
-            coord.x * matrix[0][0] + coord.y * matrix[0][1],
-            coord.x * matrix[1][0] + coord.y * matrix[1][1],
+        *this = {
+            x * matrix[0][0] + y * matrix[0][1],
+            x * matrix[1][0] + y * matrix[1][1],
         };
     }
 
+    u32 ManhattanDistance() const {
+        return std::abs(x) + std::abs(y);
+    }
+};
+
+class Waypoint {
+public:
+    void Execute(const Action& action) {
+        switch (action.type) {
+        case 'E': coord.x += action.value; break;
+        case 'S': coord.y -= action.value; break;
+        case 'W': coord.x -= action.value; break;
+        case 'N': coord.y += action.value; break;
+        case 'R': coord.RotateCW(action.value); break;
+        case 'L': coord.RotateCW(360 - action.value); break;
+        }
+    }
+
+    const Coord& Coordinates() const { return coord; }
+
+private:
     Coord coord{ 10, 1 };
 };
 
