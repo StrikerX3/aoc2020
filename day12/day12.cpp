@@ -30,16 +30,8 @@ enum class Direction {
 };
 
 Direction RotateCW(const Direction direction, const s32 degrees) {
-    constexpr Direction rotations[4][4] = {
-        { Direction::East,  Direction::South, Direction::West,  Direction::North, },
-        { Direction::South, Direction::West,  Direction::North, Direction::East,  },
-        { Direction::West,  Direction::North, Direction::East,  Direction::South, },
-        { Direction::North, Direction::East,  Direction::South, Direction::West,  },
-    };
-    auto index = degrees / 90;
-    return rotations[index][static_cast<size_t>(direction)];
+    return static_cast<Direction>((static_cast<size_t>(direction) + degrees / 90) % 4);
 }
-
 
 struct Coord {
     s32 x = 0;
