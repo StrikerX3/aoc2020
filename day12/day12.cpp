@@ -133,7 +133,7 @@ void part2(const std::vector<Action>& actions) {
             waypoint.Execute(action);
         }
     }
-    std::cout << "part 1: " << ship.ManhattanDistance() << '\n';
+    std::cout << "part 2: " << ship.ManhattanDistance() << '\n';
 }
 
 std::vector<Action> loadInput() {
