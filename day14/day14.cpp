@@ -12,7 +12,7 @@ using u64 = uint64_t;
 
 struct Mask {
     std::bitset<36> ones;     // '1'
-    std::bitset<36> zeroes;   // '0'
+    std::bitset<36> zeros;    // '0'
     std::bitset<36> floating; // 'X'
 };
 
@@ -33,7 +33,7 @@ void part1(const std::vector<Operation>& operations) {
         else {
             auto write = std::get<MemoryWrite>(op);
             write.value |= mask.ones.to_ullong();
-            write.value &= ~mask.zeroes.to_ullong();
+            write.value &= ~mask.zeros.to_ullong();
             memory[write.address] = write.value;
         }
     }
@@ -111,7 +111,7 @@ std::vector<Operation> loadInput() {
             for (size_t i = 0; i < 36; i++) {
                 char bit = line.at(i + 7);
                 switch (bit) {
-                case '0': mask.zeroes.set(35 - i); break;
+                case '0': mask.zeros.set(35 - i); break;
                 case '1': mask.ones.set(35 - i); break;
                 case 'X': mask.floating.set(35 - i); break;
                 }
