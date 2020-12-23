@@ -212,8 +212,7 @@ struct Cup {
 };
 
 void part1Pointers(u32 startingCups) {
-    std::unique_ptr<std::array<Cup, 1000001>> cupsPtr = std::make_unique<std::array<Cup, 1000001>>();
-    auto& cups = *cupsPtr;
+    std::array<Cup, 10> cups;
 
     // Initialize array
     Cup* first = &cups[startingCups % 10u];
