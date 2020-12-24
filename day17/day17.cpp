@@ -28,9 +28,10 @@ template <>
 struct hash<Coord> {
     std::size_t operator()(const Coord& s) const noexcept {
         size_t h = 17;
-        h = 31 * h + std::hash<u32>{}(s.x);
-        h = 31 * h + std::hash<u32>{}(s.y);
-        h = 31 * h + std::hash<u32>{}(s.z);
+        h = 31 * h + std::hash<s32>{}(s.x);
+        h = 31 * h + std::hash<s32>{}(s.y);
+        h = 31 * h + std::hash<s32>{}(s.z);
+        h = 31 * h + std::hash<s32>{}(s.w);
         return h;
     }
 };
